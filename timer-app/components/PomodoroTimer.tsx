@@ -6,12 +6,9 @@ import {
     CircularProgressLabel,
     Text,
 } from "@chakra-ui/react";
+import { breakTimeInMinutes, breakTimeInSeconds, workTimeInMinutes, workTimeInSeconds } from "../constants/timer";
 
 const PomodoroTimer: React.FC = () => {
-    const workTimeInMinutes = 1;
-    const workTimeInSeconds = 0;
-    const breakTimeInMinutes = 0;
-    const breakTimeInSeconds = 30;
     const [minutes, setMinutes] = useState<number>(workTimeInMinutes);
     const [seconds, setSeconds] = useState<number>(workTimeInSeconds);
     const [isRunning, setIsRunning] = useState<boolean>(false);
@@ -98,7 +95,7 @@ const PomodoroTimer: React.FC = () => {
                 color="blue.400"
             >
                 <CircularProgressLabel>
-                    <Text fontSize="3xl">{timer}</Text>
+                    <Text fontSize="3xl" data-testid="jt-timer">{timer}</Text>
                     <Text fontSize="xl">{timerMode}</Text>
                 </CircularProgressLabel>
             </CircularProgress>
