@@ -38,3 +38,7 @@ There were some complications when i try to run Jest on the project so i seek he
 ```
 Even after the configuration, there were still one compilation error in the code like above so i use both google search and ChatGPT to see if there is any solution. Turns out for typescript i still need to install one more type package in order to remove the error. It was kind of strange to me that this was not mentioned in the prompt before but at the end the tests are finally running.
 ```
+6. Create a Button component class using React Typescript and Chakra UI
+```
+To save abit of time, i asked ChatGPT to create a sample button class for my current project. The response was clear and easy for me to do any relevant modifications.
+```
