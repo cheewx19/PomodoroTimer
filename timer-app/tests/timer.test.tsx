@@ -1,7 +1,7 @@
 // Timer.test.tsx
 import React from "react";
 import { render, fireEvent, act } from "@testing-library/react";
-import PomodoroTimer from "../components/PomodoroTimer";
+import PomodoroTimer from "../components/pomodoroTimer/PomodoroTimer";
 
 describe("Timer component", () => {
     beforeEach(() => {

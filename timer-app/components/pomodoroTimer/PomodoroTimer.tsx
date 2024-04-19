@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { Box } from "@chakra-ui/react";
+import TimerDisplay from "./TimerDisplay";
+import ControlPanel from "./ControlPanel";
 import {
-    Box,
-    Button,
-    CircularProgress,
-    CircularProgressLabel,
-    Text,
-} from "@chakra-ui/react";
-import { breakTimeInMinutes, breakTimeInSeconds, workTimeInMinutes, workTimeInSeconds } from "../constants/timer";
+    breakTimeInMinutes,
+    breakTimeInSeconds,
+    workTimeInMinutes,
+    workTimeInSeconds,
+} from "../../constants/timer";
 
 const PomodoroTimer: React.FC = () => {
     const [minutes, setMinutes] = useState<number>(workTimeInMinutes);
@@ -63,54 +64,36 @@ const PomodoroTimer: React.FC = () => {
         setIsRunning(false);
         setIsWorkMode(true);
         setMinutes(workTimeInMinutes);
-        setSeconds(0);
+        setSeconds(workTimeInSeconds);
     };
 
     const getProgress = (): number => {
         const currentTimeInSeconds = minutes * 60 + seconds;
-        const totalMinutes = isWorkMode
-            ? workTimeInMinutes
-            : breakTimeInMinutes;
-        const totalSeconds = isWorkMode
-            ? workTimeInSeconds
-            : breakTimeInSeconds;
-        const totalTimeInSeconds = totalMinutes * 60 + totalSeconds;
+        const totalTimeInSeconds = isWorkMode
+            ? workTimeInMinutes * 60 + workTimeInSeconds
+            : breakTimeInMinutes * 60 + breakTimeInSeconds;
         return (currentTimeInSeconds / totalTimeInSeconds) * 100;
     };
 
-    // set all tenary logic for UI
-    const timer = `${minutes.toString().padStart(2, "0")}:${seconds
-        .toString()
-        .padStart(2, "0")}`;
+    const timer = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
     const timerMode = isWorkMode ? "Work Time" : "Break Time";
     const toggleTimerActionText = isRunning ? "Pause" : "Start";
     const toggleTimerAction = isRunning ? pauseTimer : startTimer;
 
     return (
         <Box textAlign="center">
-            <CircularProgress
-                value={getProgress()}
-                size="200px"
-                thickness="5px"
-                color="blue.400"
-            >
-                <CircularProgressLabel>
-                    <Text fontSize="3xl" data-testid="jt-timer">{timer}</Text>
-                    <Text fontSize="xl">{timerMode}</Text>
-                </CircularProgressLabel>
-            </CircularProgress>
-            <Box>
-                <Button colorScheme="blue" onClick={toggleTimerAction} mr={4}>
-                    {toggleTimerActionText}
-                </Button>
-                <Button colorScheme="red" onClick={resetTimer}>
-                    Reset
-                </Button>
-                <Box mt={4}>
-                    <Text>Work Cycles: {workCycles}</Text>
-                    <Text>Break Cycles: {breakCycles}</Text>
-                </Box>
-            </Box>
+            <TimerDisplay
+                timer={timer}
+                timerMode={timerMode}
+                workCycles={workCycles}
+                breakCycles={breakCycles}
+                getProgress={getProgress}
+            />
+            <ControlPanel
+                toggleTimerActionText={toggleTimerActionText}
+                toggleTimerAction={toggleTimerAction}
+                resetTimer={resetTimer}
+            />
         </Box>
     );
 };
